@@ -12,6 +12,7 @@ const indexPrice = (async () => {
 module.exports.getindex = (event, context, callback) => {
   const indexPrice = scrapeIndexPrice();
 
+  console.log(indexPrice)
   return indexPrice;
 
 };
