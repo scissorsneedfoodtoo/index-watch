@@ -1,7 +1,9 @@
-const puppeteer = require('puppeteer');
+const puppeteerLambda = require('puppeteer-lambda');
 
-async function scrapeIndexPrice() {
-  const browser = await puppeteer.launch();
+async function scrapeIndex() {
+  const browser = await puppeteerLambda.getBrowser({
+    headless: true
+  });
   const page = await browser.newPage();
   await page.goto('https://www.google.com/search?q=vtsax');
 
@@ -12,13 +14,13 @@ async function scrapeIndexPrice() {
   percentChange = percentChange.replace(/\(|\)/g, '');
   priceChange.includes('+') ? percentChange = '+' + percentChange : percentChange = '−' + percentChange; 
 
-  const index = {price, priceChange, percentChange}
+  const indexObj = {price, priceChange, percentChange}
 
   await browser.close();
 
-  return index;
+  return indexObj;
 }
 
 module.exports = {
-  scrapeIndexPrice
+  scrapeIndex
 };
