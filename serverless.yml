@@ -55,12 +55,11 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  getindex:
+  getIndex:
     handler: handler.getIndex
-
-package:
-  exclude:
-    - node_modules/puppeteer/.local-chromium/** # exclude puppeteer chrome if exists
+    environment:
+      CUSTOM_CHROME: true
+      PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
