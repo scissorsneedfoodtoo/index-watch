@@ -55,8 +55,11 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  getindex:
-    handler: handler.getindex
+  getIndex:
+    handler: handler.getIndex
+    environment:
+      CUSTOM_CHROME: true
+      PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events

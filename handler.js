@@ -1,18 +1,11 @@
-const {scrapeIndexPrice} = require('./helpers');
+const {scrapeIndex} = require('./helpers');
 
-const indexPrice = (async () => {
-  const browser = await puppeteer.launch();
-  const page = await browser.newPage();
-  await page.goto('https://example.com');
-  await page.screenshot({path: 'example.png'});
+async function getIndex(event, context, callback) {
+  const index = await scrapeIndex();
 
-  await browser.close();
-});
-
-module.exports.getindex = (event, context, callback) => {
-  const indexPrice = scrapeIndexPrice();
-
-  console.log(indexPrice)
-  return indexPrice;
-
+  callback(null, index);
 };
+
+module.exports = {
+  getIndex
+}
