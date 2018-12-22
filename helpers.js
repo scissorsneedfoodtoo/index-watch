@@ -1,24 +1,17 @@
-const puppeteerLambda = require('puppeteer-lambda');
+const cheerio = require('cheerio');
 
-async function scrapeIndex() {
-  const browser = await puppeteerLambda.getBrowser({
-    headless: true
-  });
-  const page = await browser.newPage();
-  await page.goto('https://www.google.com/search?q=vtsax');
+function scrapeIndex(html) {
+  const $ = cheerio.load(html);
+  const name = $('#quote-header-info > div > div > div').text();
+  const price = $('#quote-header-info > div > div > div > span').eq(1).text();
+  const change = $('#quote-header-info > div > div > div > span').eq(2).text();
 
-  const data = await page.evaluate(() => document.querySelector('#knowledge-finance-wholepage__entity-summary > div > g-card-section > div > g-card-section > div.gsrt').innerText);
-  
-  let [price, , priceChange, percentChange] = data.split(' ');
+  let ticker = name.match(/\(\w+\)/g);
+  ticker = ticker[0].replace(/\(|\)/g, '');
 
-  percentChange = percentChange.replace(/\(|\)/g, '');
-  priceChange.includes('+') ? percentChange = '+' + percentChange : percentChange = '−' + percentChange; 
+  const [priceChange, percentChange] = change.split(' ');
 
-  const indexObj = {price, priceChange, percentChange}
-
-  await browser.close();
-
-  return indexObj;
+  return {ticker, price, priceChange, percentChange};
 }
 
 module.exports = {
