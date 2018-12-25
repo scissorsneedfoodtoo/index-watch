@@ -1,16 +1,17 @@
-const request = require('request');
+const rp = require('request-promise');
+// const dynamo = new AWS.DynamoDB.DocumentClient();
+// const {isEqual} = require('lodash');
 const {scrapeIndex} = require('./helpers');
 
 function getIndex(event, context, callback) {
   const url = 'https://finance.yahoo.com/quote/VTSAX/history?p=VTSAX';
 
-  request(url, function (err, res, body) {
-    if (!err && res.statusCode == 200) {
-      const index = scrapeIndex(body);
+  rp(url)
+    .then(html => {
+      const index = scrapeIndex(html);
 
       callback(null, index);
-    }
-  });
+    })
 };
 
 module.exports = {
