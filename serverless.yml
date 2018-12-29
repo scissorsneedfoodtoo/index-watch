@@ -8,39 +8,39 @@ functions:
   getIndex:
     handler: handler.getIndex
 
-# resources:
-#   Resources:
-#     currentIndex:
-#       Type: AWS::DynamoDB::Table
-#       Properties:
-#         TableName: currentIndex
-#         AttributeDefinitions:
-#           - AttributeName: indexObj
-#             AttributeType: S
-#         KeySchema:
-#           - AttributeName: listingId
-#             KeyType: HASH
-#         ProvisionedThroughput:
-#           ReadCapacityUnits: 1
-#           WriteCapacityUnits: 1
+resources:
+  Resources:
+    donkeyjobs:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: currentIndex
+        AttributeDefinitions:
+          - AttributeName: indexObj
+            AttributeType: S
+        KeySchema:
+          - AttributeName: indexObj
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
 
-#     DynamoDBIamPolicy: 
-#       Type: AWS::IAM::Policy
-#       DependsOn: currentIndex
-#       Properties:
-#         PolicyName: lambda-dynamodb
-#         PolicyDocument:
-#           Version: '2012-10-17'
-#           Statement:
-#             - Effect: Allow
-#               Action:
-#                 - dynamodb:DescribeTable
-#                 - dynamodb:Query
-#                 - dynamodb:Scan
-#                 - dynamodb:GetItem
-#                 - dynamodb:PutItem
-#                 - dynamodb:UpdateItem
-#                 - dynamodb:DeleteItem
-#               Resource: arn:aws:dynamodb:*:*:table/currentIndex
-#         Roles:
-#           - Ref: IamRoleLambdaExecution
+DynamoDBIamPolicy: 
+  Type: AWS::IAM::Policy
+  DependsOn: currentIndex
+  Properties:
+    PolicyName: lambda-dynamodb
+    PolicyDocument:
+      Version: '2012-10-17'
+      Statement:
+        - Effect: Allow
+          Action:
+            - dynamodb:DescribeTable
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource: arn:aws:dynamodb:*:*:table/currentIndex
+    Roles:
+      - Ref: IamRoleLambdaExecution

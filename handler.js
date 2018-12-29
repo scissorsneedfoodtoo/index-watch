@@ -1,6 +1,7 @@
 const rp = require('request-promise');
-// const dynamo = new AWS.DynamoDB.DocumentClient();
-// const {isEqual} = require('lodash');
+const AWS = require('aws-sdk');
+const dynamo = new AWS.DynamoDB.DocumentClient();
+const {isEqual} = require('lodash');
 const {scrapeIndex} = require('./helpers');
 
 function getIndex(event, context, callback) {
