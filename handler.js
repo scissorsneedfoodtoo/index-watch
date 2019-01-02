@@ -5,7 +5,7 @@ const {scrapeIndex} = require('./helpers');
 
 function getIndex(event, context, callback) {
   const url = 'https://finance.yahoo.com/quote/VTSAX/history?p=VTSAX';
-  let currentIndex;
+  let currentIndex, indexExists, newerIndex;
 
   rp(url)
     .then(html => {
@@ -18,9 +18,11 @@ function getIndex(event, context, callback) {
     })
     .then(res => {
       // Check if currentIndex is the same as the last index in DB
-      const newerIndex = res.index ? res.index.closingDate !== currentIndex.closingDate : false;
+      indexExists = res.Items.length > 0;
+      newerIndex = indexExists ? res.Items[0].index.closingDate !== currentIndex.closingDate : false;
       const indexToDelete = res.Items[0] ? res.Items[0].listingID : null;
-      console.log(res)
+      
+      console.log(res);
 
       if(newerIndex) {
         return dynamo.delete({
@@ -33,18 +35,20 @@ function getIndex(event, context, callback) {
     })
     .then(() => {
       // save currentIndex
-      return dynamo.put({
-        TableName: 'storedIndex',
-        Item: {
-          listingID: new Date().toString(),
-          index: currentIndex
-        }
-      }).promise();
+      if (!indexExists || newerIndex) {
+        return dynamo.put({
+          TableName: 'storedIndex',
+          Item: {
+            listingID: new Date().toString(),
+            index: currentIndex
+          }
+        }).promise();
+      } else return;
     })
     .then(() => {
       callback(null, currentIndex);
     })
-    .catch(callback)
+    .catch(callback);
 };
 
 module.exports = {
