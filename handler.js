@@ -24,7 +24,6 @@ function getIndex(event, context, callback) {
       const indexToDelete = res.Items[0] ? res.Items[0].listingID : null;
       
       // console.log(res); // Check response from DB
-      sendEmail(); // testing sendEmail
 
       if(newerIndex) {
         return dynamo.delete({
@@ -38,6 +37,8 @@ function getIndex(event, context, callback) {
     .then(() => {
       // save currentIndex
       if (!indexExists || newerIndex) {
+        sendEmail(currentIndex); // send email before saving
+
         return dynamo.put({
           TableName: 'storedIndex',
           Item: {

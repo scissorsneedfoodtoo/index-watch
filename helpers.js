@@ -1,8 +1,7 @@
 const cheerio = require('cheerio');
-const mailgun = require('mailgun-js')({ 
-  apiKey: process.env.MAILGUN_API_KEY,
-  domain: process.env.MAILGUN_DOMAIN
-});
+const mailgunAPIKey = process.env.MAILGUN_API_KEY;
+const mailgunDomain = process.env.MAILGUN_DOMAIN;
+const mailgun = require('mailgun-js')({apiKey: mailgunAPIKey, domain: mailgunDomain});
 
 function scrapeIndex(html) {
   const $ = cheerio.load(html);
@@ -19,10 +18,23 @@ function scrapeIndex(html) {
   return {ticker, price, priceChange, percentChange, closingDate};
 }
 
-function sendEmail() {
-  
+function sendEmail(indexObj) {
+  const email = {
+    from: 'Index Watcher <me@index-watcher.mailgun.org>',
+    to: process.env.VERIFIED_EMAIL,
+    subject: 'Current Index',
+    text: `
+      ticker: ${indexObj.ticker},
+      price: ${indexObj.price},
+      priceChange: ${indexObj.priceChange},
+      percentChange: ${indexObj.percentChange},
+      closingDate: ${indexObj.closingDate}
+    `
+  }
 
-  console.log(mailgun);
+  mailgun.messages().send(email, function(err, body) {
+    console.log(body);
+  });
 }
 
 module.exports = {
