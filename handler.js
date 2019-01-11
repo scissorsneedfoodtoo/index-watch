@@ -1,7 +1,8 @@
+require('dotenv').config();
 const rp = require('request-promise');
 const AWS = require('aws-sdk');
 const dynamo = new AWS.DynamoDB.DocumentClient();
-const {scrapeIndex} = require('./helpers');
+const { scrapeIndex, sendEmail } = require('./helpers');
 
 function getIndex(event, context, callback) {
   const url = 'https://finance.yahoo.com/quote/VTSAX/history?p=VTSAX';
@@ -22,7 +23,8 @@ function getIndex(event, context, callback) {
       newerIndex = indexExists ? res.Items[0].index.closingDate !== currentIndex.closingDate : false;
       const indexToDelete = res.Items[0] ? res.Items[0].listingID : null;
       
-      console.log(res);
+      // console.log(res); // Check response from DB
+      sendEmail(); // testing sendEmail
 
       if(newerIndex) {
         return dynamo.delete({

@@ -1,4 +1,8 @@
 const cheerio = require('cheerio');
+const mailgun = require('mailgun-js')({ 
+  apiKey: process.env.MAILGUN_API_KEY,
+  domain: process.env.MAILGUN_DOMAIN
+});
 
 function scrapeIndex(html) {
   const $ = cheerio.load(html);
@@ -15,6 +19,13 @@ function scrapeIndex(html) {
   return {ticker, price, priceChange, percentChange, closingDate};
 }
 
+function sendEmail() {
+  
+
+  console.log(mailgun);
+}
+
 module.exports = {
-  scrapeIndex
+  scrapeIndex,
+  sendEmail
 };
