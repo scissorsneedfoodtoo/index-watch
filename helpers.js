@@ -33,6 +33,7 @@ function sendEmail(indexObj) {
   }
 
   mailgun.messages().send(email, function(err, body) {
+    console.log('sending email');
     console.log(body);
   });
 }
