@@ -7,6 +7,10 @@ provider:
 functions:
   getIndex:
     handler: handler.getIndex
+    events:
+      - schedule:
+          rate: cron(30 21 * * ? *)
+          enabled: true
 
 resources:
   Resources:
