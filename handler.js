@@ -35,7 +35,6 @@ function getIndex(event, context, callback) {
       } else return;
     })
     .then(() => {
-      // sendEmail(currentIndex); // testing send email
 
       // save currentIndex
       if (!indexExists || newerIndex) {
