@@ -9,7 +9,7 @@ functions:
     handler: handler.getIndex
     events:
       - schedule:
-          rate: cron(30 21 * * ? *)
+          rate: cron(0/10 21-23 * * ? *)
           enabled: true
 
 resources:
