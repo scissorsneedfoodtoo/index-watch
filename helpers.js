@@ -5,17 +5,13 @@ const mailgun = require('mailgun-js')({apiKey: mailgunAPIKey, domain: mailgunDom
 
 function scrapeIndex(html) {
   const $ = cheerio.load(html);
-  const name = $('#quote-header-info > div > div > div').text();
-  const price = $('#quote-header-info > div > div > div > span').eq(1).text();
-  const change = $('#quote-header-info > div > div > div > span').eq(2).text();
-  const closingDate = $('#Col1-1-HistoricalDataTable-Proxy > section > div > table > tbody > tr:nth-child(1) > td > span').eq(0).text();
+  const ticker = $('body > div.container.wrapper.clearfix.j-quoteContainer > div.content-region.region--fixed > div:nth-child(1) > div.column.column--full.company > div > div:nth-child(1) > div.company__symbol > span.company__ticker').text();
+  const value = $('body > div.container.wrapper.clearfix.j-quoteContainer > div.content-region.region--fixed > div.template.template--aside > div > div > div.intraday__data > h3').text().replace(/\s/g, '');
+  const pointChange = $('body > div.container.wrapper.clearfix.j-quoteContainer > div.content-region.region--fixed > div.template.template--aside > div > div > div.intraday__data > bg-quote > span.change--point--q').text();
+  const percentChange = $('body > div.container.wrapper.clearfix.j-quoteContainer > div.content-region.region--fixed > div.template.template--aside > div > div > div.intraday__data > bg-quote > span.change--percent--q').text();
+  const closingDate = $('body > div.container.wrapper.clearfix.j-quoteContainer > div.content-region.region--fixed > div.template.template--aside > div > div > div.intraday__timestamp > span > bg-quote').text();
 
-  let ticker = name.match(/\(\w+\)/g);
-  ticker = ticker[0].replace(/\(|\)/g, '');
-
-  const [priceChange, percentChange] = change.split(' ');
-
-  return {ticker, price, priceChange, percentChange, closingDate};
+  return {ticker, value, pointChange, percentChange, closingDate};
 }
 
 function sendEmail(indexObj) {
@@ -25,8 +21,8 @@ function sendEmail(indexObj) {
     subject: 'Current Index',
     text: `
       ticker: ${indexObj.ticker},
-      price: ${indexObj.price},
-      priceChange: ${indexObj.priceChange},
+      value: ${indexObj.value},
+      pointChange: ${indexObj.pointChange},
       percentChange: ${indexObj.percentChange},
       closingDate: ${indexObj.closingDate}
     `
