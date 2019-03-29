@@ -8,7 +8,7 @@ market closes. Developed using the Serverless framework, DynamoDB, and Mailgun.
 
 ### Running the app
 
-To use the app, clone this repository by entering `git clone https://github.com/scissorsneedfoodtoo/index-watcher.git` into your terminal/command prompt/bash shell. Next, enter `cd index-watcher` to change directories to the newly created bus-arrival-monitor directory. Then install the necessary dependencies with `npm install` and `cp sample.env .env` to create a file to hold private local environment variables.
+To use the app, clone this repository by entering `git clone https://github.com/scissorsneedfoodtoo/index-watcher.git` into your terminal/command prompt/bash shell. Next, enter `cd index-watcher` to change directories to the newly created index-watcher directory. Then install the necessary dependencies with `npm install` and `cp sample.env .env` to create a file to hold private local environment variables.
 
 Make an account with Mailgun, verify the email address you wish to use, and enter your Mailgun API key, Mailgun domain, and your verified email address into the `.env` file. Go through the [Serverless AWS Quickstart Guide](https://serverless.com/framework/docs/providers/aws/guide/quick-start/) to install serverless and set up your credentials.
 

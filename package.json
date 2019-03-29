@@ -1,0 +1,29 @@
+{
+  "name": "index-watcher",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">   <img width=\"400\" height=\"300\" src=\"https://user-images.githubusercontent.com/2051070/52254666-22d5ba00-2952-11e9-908c-05e53bf7a68e.jpg\"> </div>",
+  "main": "handler.js",
+  "dependencies": {
+    "aws-sdk": "^2.431.0",
+    "cheerio": "^1.0.0-rc.2",
+    "dotenv": "^6.2.0",
+    "lodash": "^4.17.11",
+    "mailgun-js": "^0.22.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/scissorsneedfoodtoo/index-watcher.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/scissorsneedfoodtoo/index-watcher/issues"
+  },
+  "homepage": "https://github.com/scissorsneedfoodtoo/index-watcher#readme"
+}
