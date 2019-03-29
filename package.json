@@ -14,6 +14,8 @@
   },
   "devDependencies": {},
   "scripts": {
+    "start": "sls invoke --function getIndex",
+    "start local": "sls invoke local --function getIndex",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
