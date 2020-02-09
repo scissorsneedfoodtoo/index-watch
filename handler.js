@@ -5,7 +5,8 @@ const dynamo = new AWS.DynamoDB.DocumentClient();
 const { scrapeIndex, sendEmail } = require('./helpers');
 
 function getIndex(event, context, callback) {
-  const url = 'https://www.marketwatch.com/investing/fund/vtsax';
+  const url = 'https://www.schwab.wallst.com/Prospect/Research/mutualfunds/portfolio.asp?symbol=VTSAX';
+
   let currentIndex, indexExists, newerIndex;
 
   rp(url)

@@ -3,8 +3,7 @@
   <img width="400" height="300" src="https://user-images.githubusercontent.com/2051070/52254666-22d5ba00-2952-11e9-908c-05e53bf7a68e.jpg">
 </div>
 
-An AWS Lambda function that scrapes the latest price of an index fund, saves it to a database, and sends a notification after the stock
-market closes. Developed using the Serverless framework, DynamoDB, and Mailgun.
+An AWS Lambda function that scrapes the latest price of an index fund, saves it to a database, and sends a notification after the stock market closes. Developed using the Serverless framework, DynamoDB, and Mailgun.
 
 ### Running the app
 
