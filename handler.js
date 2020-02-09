@@ -1,4 +1,3 @@
-require('dotenv').config();
 const rp = require('request-promise');
 const AWS = require('aws-sdk');
 const dynamo = new AWS.DynamoDB.DocumentClient();
@@ -51,7 +50,10 @@ function getIndex(event, context, callback) {
       } else return;
     })
     .then(() => {
-      callback(null, currentIndex);
+      callback(null, {
+          statusCode: 200,
+          body: JSON.stringify(currentIndex),
+        })
     })
     .catch(callback);
 };

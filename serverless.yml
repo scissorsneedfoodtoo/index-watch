@@ -1,8 +1,11 @@
 service: index-watcher # NOTE: update this with your service name
 
+plugins:
+  - serverless-dotenv-plugin
+
 provider:
   name: aws
-  runtime: nodejs8.10
+  runtime: nodejs12.x
 
 functions:
   getIndex:

@@ -5,13 +5,14 @@
   "main": "handler.js",
   "dependencies": {
     "aws-sdk": "^2.431.0",
-    "dotenv": "^6.2.0",
     "jsdom": "^16.1.0",
     "mailgun-js": "^0.22.0",
     "request": "^2.88.0",
     "request-promise": "^4.2.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "serverless-dotenv-plugin": "^2.3.1"
+  },
   "scripts": {
     "start": "sls invoke --function getIndex",
     "start local": "sls invoke local --function getIndex",
