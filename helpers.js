@@ -1,15 +1,18 @@
-const cheerio = require('cheerio');
+const jsdom = require('jsdom');
+const { JSDOM } = jsdom;
 const mailgunAPIKey = process.env.MAILGUN_API_KEY;
 const mailgunDomain = process.env.MAILGUN_DOMAIN;
 const mailgun = require('mailgun-js')({apiKey: mailgunAPIKey, domain: mailgunDomain});
 
 function scrapeIndex(html) {
-  const $ = cheerio.load(html);
-  const ticker = $('body > div.container.wrapper.clearfix.j-quoteContainer > div.content-region.region--fixed > div:nth-child(1) > div.column.column--full.company > div > div:nth-child(1) > div.company__symbol > span.company__ticker').text();
-  const value = $('body > div.container.wrapper.clearfix.j-quoteContainer > div.content-region.region--fixed > div.template.template--aside > div > div > div.intraday__data > h3').text().replace(/\s/g, '');
-  const pointChange = $('body > div.container.wrapper.clearfix.j-quoteContainer > div.content-region.region--fixed > div.template.template--aside > div > div > div.intraday__data > bg-quote > span.change--point--q').text();
-  const percentChange = $('body > div.container.wrapper.clearfix.j-quoteContainer > div.content-region.region--fixed > div.template.template--aside > div > div > div.intraday__data > bg-quote > span.change--percent--q').text();
-  const closingDate = $('body > div.container.wrapper.clearfix.j-quoteContainer > div.content-region.region--fixed > div.template.template--aside > div > div > div.intraday__timestamp > span > bg-quote').text();
+  const dom = new JSDOM(html);
+  const doc = dom.window.document;
+  const ticker = doc.querySelector("#symbolDescBlock > h2 > span").textContent;
+  const value = doc.querySelector("#firstGlanceQuoteTable > tbody > tr:nth-child(1) > td:nth-child(1)").textContent;
+  const pointChange = doc.querySelector("#firstGlanceQuoteTable > tbody > tr:nth-child(1) > td:nth-child(2) > span:nth-child(1)").textContent;
+  const percentChange = doc.querySelector("#firstGlanceQuoteTable > tbody > tr:nth-child(1) > td:nth-child(2) > span:nth-child(2)").textContent;
+  const rawDate = new Date(doc.querySelector("#firstGlanceQuoteTable > tbody > tr:nth-child(2) > td:nth-child(1)").textContent.replace('Quote data as of close ', ''));
+  const closingDate = `${rawDate.toLocaleString('default', { month: 'short' })} ${rawDate.getDate()}, ${rawDate.getFullYear()}`
 
   return {ticker, value, pointChange, percentChange, closingDate};
 }

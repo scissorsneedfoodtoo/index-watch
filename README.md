@@ -3,8 +3,7 @@
   <img width="400" height="300" src="https://user-images.githubusercontent.com/2051070/52254666-22d5ba00-2952-11e9-908c-05e53bf7a68e.jpg">
 </div>
 
-An AWS Lambda function that scrapes the latest price of an index fund, saves it to a database, and sends a notification after the stock
-market closes. Developed using the Serverless framework, DynamoDB, and Mailgun.
+An AWS Lambda function that scrapes the latest price of an index fund, saves it to a database, and sends a notification after the stock market closes. Developed using the Serverless framework, DynamoDB, and Mailgun.
 
 ### Running the app
 
@@ -30,8 +29,8 @@ Note: Emails are not sent when running the app locally, but only when running fr
 
 ### Changing the index
 
-This app is designed to scrape Market Watch for information about VTSAX, but it should be flexible enough to work with other stock or bond indexes, or even individual stocks. To track a different index/stock/bond, change the URL on [this line](https://github.com/scissorsneedfoodtoo/index-watcher/blob/692f54f17c0613bfe4fde8a128947e622af8d90a/handler.js#L8).
+This app is designed to scrape Charles Schwab for information about VTSAX, but it should be flexible enough to work with other stock or bond indexes, or even individual stocks. To track a different index/stock/bond, change the URL on [this line](https://github.com/scissorsneedfoodtoo/index-watcher/blob/692f54f17c0613bfe4fde8a128947e622af8d90a/handler.js#L8).
 
 ### Changing the cron schedule
 
-Market Watch publishes new information about VTSAX pretty reliably at around 22:30 UTC, about an hour and a half after the markets close at 21:00 UTC. But this isn't always the case, especially with other indexes or individual stocks. You can adjust the rate the function runs by changing [this line](https://github.com/scissorsneedfoodtoo/index-watcher/blob/692f54f17c0613bfe4fde8a128947e622af8d90a/serverless.yml#L12) in the `serverless.yml` file. Remeber to redeploy with `sls deploy` after making adjustments to the cron schedule! See [this guide](https://serverless.com/framework/docs/providers/aws/events/schedule/) for more information.
+Charles Schwab publishes new information about VTSAX pretty reliably at around 22:30 UTC, about an hour and a half after the markets close at 21:00 UTC. But this isn't always the case, especially with other indexes or individual stocks. You can adjust the rate the function runs by changing [this line](https://github.com/scissorsneedfoodtoo/index-watcher/blob/692f54f17c0613bfe4fde8a128947e622af8d90a/serverless.yml#L12) in the `serverless.yml` file. Remember to redeploy with `sls deploy` after making adjustments to the cron schedule! See [this guide](https://serverless.com/framework/docs/providers/aws/events/schedule/) for more information.
